@@ -19,7 +19,15 @@ void changeRowsByMinAndMax() {
 
 
 //---------------------------------------- TASK 2
+void sortRowsByMinElement() {
+    matrix m = createMatrixFromArray((int[]) {7, 1, 2,
+                                              1, 8, 1,
+                                              3, 2, 3}, 3, 3);
 
+    insertionSortRowsMatrixByRowCriteria(m, getMax);
+
+    outputMatrix(m);
+}
 //---------------------------------------- TASK 3
 
 //---------------------------------------- TASK 4
@@ -43,6 +51,7 @@ void changeRowsByMinAndMax() {
 int main() {
 
     changeRowsByMinAndMax();
+    sortRowsByMinElement();
 //    matrix m = createMatrixFromArray((int[]) {0, 1, 2,
 //                                              0, 1, 2,
 //                                              0, 1, 2}, 3, 3);

@@ -16,6 +16,26 @@ void swap(void *a, void *b, size_t size) {
     }
 }
 
+int getMax(const int *a, int length){
+    int maxElement = a[0];
+
+    for (int i = 1; i < length; ++i)
+        if (maxElement < a[i])
+            maxElement = a[i];
+
+    return maxElement;
+}
+
+int getMin(const int *a, int length){
+    int minElement = a[0];
+
+    for (int i = 0; i < length; ++i)
+        if (minElement > a[i])
+            minElement = a[i];
+
+    return minElement;
+}
+
 void inputArray_(int *const a, const size_t n) {
     for (size_t i = 0; i < n; i++)
         scanf("%d", &a[i]);
