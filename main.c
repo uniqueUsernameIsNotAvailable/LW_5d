@@ -40,6 +40,15 @@ void sortColsByMinElement() {
 }
 
 //---------------------------------------- TASK 4
+void getSquareOfMatrixIfSymmetric() {
+    matrix m = createMatrixFromArray((int[]) {1,2,
+                                              2,1}, 2, 2);
+
+    if(isSymmetricMatrix(m))
+        m = mulMatrices(m, m);
+
+    outputMatrix(m);
+}
 
 //---------------------------------------- TASK 5
 
@@ -62,6 +71,7 @@ int main() {
     changeRowsByMinAndMax();
     sortRowsByMaxElement();
     sortColsByMinElement();
+    getSquareOfMatrixIfSymmetric();
 //    matrix m = createMatrixFromArray((int[]) {0, 1, 2,
 //                                              0, 1, 2,
 //                                              0, 1, 2}, 3, 3);

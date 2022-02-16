@@ -172,5 +172,12 @@ matrix createMatrixFromArray(const int *a, size_t nRows, size_t nCols);
  */
 matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols);
 
+/*!
+ * Перемножает матрицы
+ * @param m1 - первая матрица
+ * @param m2 - вторая матрица
+ * @return mProduct - матрицу-произведение
+ */
+matrix mulMatrices(matrix m1, matrix m2);
 
 #endif //LW_5D_MATRIX_H

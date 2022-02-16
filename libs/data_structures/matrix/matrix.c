@@ -202,3 +202,23 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
 
     return ms;
 }
+
+//--------------------------------------------------- NEW FUNCTIONS FROM TASKS
+
+matrix mulMatrices(matrix m1, matrix m2) {
+    if ((m1).nRows != (m2).nCols) {
+        fprintf(stderr, "Matrices won't multiply");
+        exit(2022);
+    }
+
+    matrix mProduct = getMemMatrix((m2).nRows, (m1).nCols);
+
+    for (int i = 0; i < (m1).nCols; ++i)
+        for (int j = 0; j < (m2).nRows; ++j) {
+            (mProduct).values[i][j] = 0;
+            for (int k = 0; k < (m1).nRows; ++k)
+                (mProduct).values[i][j] += (m1).values[i][k] * (m2).values[k][j];
+        }
+
+    return mProduct;
+}
