@@ -19,6 +19,8 @@ _Bool isUnique(const long long *a, int length);
 
 long long getSum(const int *a, int length);
 
+int max(int a, int b);
+
 // ввод массива data размера n
 void inputArray_(int *a, size_t n);
 

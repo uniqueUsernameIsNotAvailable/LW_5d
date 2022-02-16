@@ -82,6 +82,31 @@ _Bool isMutuallyInverseMatrices() {
 
 //---------------------------------------- TASK 7
 
+
+int getMaxFromPDiagonal(matrix m, int i, int j) {
+    int maxElement = m.values[i][j];
+
+    while (i < m.nRows && j < m.nCols)
+        maxElement = max(maxElement, m.values[i++][j++]);
+
+    return maxElement;
+}
+
+long long findSumOfMaxesOfPseudoDiagonal() {
+    matrix m = createMatrixFromArray((int[]) {3, 2, 5, 4,
+                                              1, 3, 6, 3,
+                                              3, 2, 1, 2}, 3, 4);
+
+    long long sumOfMaxOfPDiagonal = 0;
+    for (int i = 1; i < m.nRows; ++i)
+        sumOfMaxOfPDiagonal += getMaxFromPDiagonal(m, i, 0);
+
+    for (int i = 0; i < m.nCols; ++i)
+        sumOfMaxOfPDiagonal += getMaxFromPDiagonal(m, 0, i);
+
+    //SUBTRACT MAIN DIAG
+    return sumOfMaxOfPDiagonal - getMaxFromPDiagonal(m, 0, 0);
+}
 //---------------------------------------- TASK 8
 
 
@@ -99,7 +124,8 @@ int main() {
     sortColsByMinElement();
     getSquareOfMatrixIfSymmetric();
     transposeIfMatrixHasNotEqualSumOfRows();
-    printf("%d", isMutuallyInverseMatrices());
+    printf("%d\n", isMutuallyInverseMatrices());
+    printf("%d", findSumOfMaxesOfPseudoDiagonal());
 
 //    matrix m = createMatrixFromArray((int[]) {0, 1, 2,
 //                                              0, 1, 2,
