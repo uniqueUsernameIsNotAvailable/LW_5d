@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <assert.h>
-#include <stdbool.h>
 #include <malloc.h>
 #include "libs/data_structures/matrix/matrix.h"
 
@@ -69,6 +68,17 @@ void transposeIfMatrixHasNotEqualSumOfRows() {
 }
 
 //---------------------------------------- TASK 6
+_Bool isMutuallyInverseMatrices() {
+    matrix m1 = createMatrixFromArray((int[]) {2, 5, 7,
+                                               6, 3, 4,
+                                               5, -2, -3}, 3, 3);
+
+    matrix m2 = createMatrixFromArray((int[]) {1, -1, 1,
+                                               -38, 41, -34,
+                                               27, -29, 24}, 3, 3);
+
+    return (isEMatrix(mulMatrices(m1, m2)));
+}
 
 //---------------------------------------- TASK 7
 
@@ -89,6 +99,7 @@ int main() {
     sortColsByMinElement();
     getSquareOfMatrixIfSymmetric();
     transposeIfMatrixHasNotEqualSumOfRows();
+    printf("%d", isMutuallyInverseMatrices());
 
 //    matrix m = createMatrixFromArray((int[]) {0, 1, 2,
 //                                              0, 1, 2,
