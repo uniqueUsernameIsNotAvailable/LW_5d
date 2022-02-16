@@ -11,6 +11,10 @@
  */
 void swap(void *a, void *b, size_t size);
 
+int getMax(int *a, int n);
+
+int getMin(int *a, int n);
+
 // ввод массива data размера n
 void inputArray_(int *a, size_t n);
 
