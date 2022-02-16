@@ -17,9 +17,8 @@ void changeRowsByMinAndMax() {
     outputMatrix(m);
 }
 
-
 //---------------------------------------- TASK 2
-void sortRowsByMinElement() {
+void sortRowsByMaxElement() {
     matrix m = createMatrixFromArray((int[]) {7, 1, 2,
                                               1, 8, 1,
                                               3, 2, 3}, 3, 3);
@@ -28,7 +27,17 @@ void sortRowsByMinElement() {
 
     outputMatrix(m);
 }
+
 //---------------------------------------- TASK 3
+void sortColsByMinElement() {
+    matrix m = createMatrixFromArray((int[]) {3, 5, 2, 4, 3, 3,
+                                              2, 5, 1, 8, 2, 7,
+                                              6, 1, 4, 4, 8, 3}, 3, 6);
+
+    insertionSortColsMatrixByColCriteria(m, getMin);
+
+    outputMatrix(m);
+}
 
 //---------------------------------------- TASK 4
 
@@ -51,7 +60,8 @@ void sortRowsByMinElement() {
 int main() {
 
     changeRowsByMinAndMax();
-    sortRowsByMinElement();
+    sortRowsByMaxElement();
+    sortColsByMinElement();
 //    matrix m = createMatrixFromArray((int[]) {0, 1, 2,
 //                                              0, 1, 2,
 //                                              0, 1, 2}, 3, 3);
