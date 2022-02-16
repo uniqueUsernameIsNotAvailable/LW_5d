@@ -15,6 +15,10 @@ int getMax(const int * a, int length);
 
 int getMin(const int *a, int length);
 
+_Bool isUnique(const long long *a, int length);
+
+long long getSum(const int *a, int length);
+
 // ввод массива data размера n
 void inputArray_(int *a, size_t n);
 

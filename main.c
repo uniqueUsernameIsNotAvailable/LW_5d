@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <malloc.h>
 #include "libs/data_structures/matrix/matrix.h"
 
 //---------------------------------------- TASK 1
@@ -41,16 +42,31 @@ void sortColsByMinElement() {
 
 //---------------------------------------- TASK 4
 void getSquareOfMatrixIfSymmetric() {
-    matrix m = createMatrixFromArray((int[]) {1,2,
-                                              2,1}, 2, 2);
+    matrix m = createMatrixFromArray((int[]) {1, 2,
+                                              2, 1}, 2, 2);
 
-    if(isSymmetricMatrix(m))
+    if (isSymmetricMatrix(m))
         m = mulMatrices(m, m);
 
     outputMatrix(m);
 }
 
 //---------------------------------------- TASK 5
+void transposeIfMatrixHasNotEqualSumOfRows() {
+    matrix m = createMatrixFromArray((int[]) {1, 2, 3,
+                                              4, 5, 6,
+                                              7, 8, 9}, 3, 3);
+
+    long long aOfSum[m.nRows];
+
+    for (size_t i = 0; i < m.nRows; ++i)
+        aOfSum[i] = getSum(m.values[i], m.nCols);
+
+    if (isUnique(aOfSum, m.nRows))
+        transposeSquareMatrix(m);
+
+    outputMatrix(m);
+}
 
 //---------------------------------------- TASK 6
 
@@ -72,6 +88,8 @@ int main() {
     sortRowsByMaxElement();
     sortColsByMinElement();
     getSquareOfMatrixIfSymmetric();
+    transposeIfMatrixHasNotEqualSumOfRows();
+
 //    matrix m = createMatrixFromArray((int[]) {0, 1, 2,
 //                                              0, 1, 2,
 //                                              0, 1, 2}, 3, 3);

@@ -16,7 +16,7 @@ void swap(void *a, void *b, size_t size) {
     }
 }
 
-int getMax(const int *a, int length){
+int getMax(const int *a, int length) {
     int maxElement = a[0];
 
     for (int i = 1; i < length; ++i)
@@ -26,7 +26,7 @@ int getMax(const int *a, int length){
     return maxElement;
 }
 
-int getMin(const int *a, int length){
+int getMin(const int *a, int length) {
     int minElement = a[0];
 
     for (int i = 0; i < length; ++i)
@@ -34,6 +34,24 @@ int getMin(const int *a, int length){
             minElement = a[i];
 
     return minElement;
+}
+
+_Bool isUnique(const long long *a, int length) {
+    for (size_t i = 0; i < length - 1; ++i) {
+        if (a[i] == a[i + 1])
+            return 0;
+    }
+
+    return 1;
+}
+
+long long getSum(const int *a, int length) {
+    long long sum = 0;
+
+    for (int i = 0; i < length; ++i)
+        sum += a[i];
+
+    return sum;
 }
 
 void inputArray_(int *const a, const size_t n) {
