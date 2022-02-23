@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory.h>
+
 #include "matrix.h"
 
 
@@ -68,7 +70,7 @@ void swapColumns(matrix m, int j1, int j2) {
         swap(&m.values[i][j1], &m.values[i][j2], sizeof(int));
 }
 
-
+  //  TODO:SELECTION
 void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
     int *criteriaArray = (int *) malloc(sizeof(int) * m.nRows);
 
@@ -116,10 +118,10 @@ _Bool areTwoMatricesEqual(matrix m1, matrix m2) {
     if (m1.nCols != m2.nCols || m1.nRows != m2.nRows)
         return 0;
 
-    for (size_t i = 0; i < m1.nRows; i++)
-        for (size_t j = 0; j < m1.nCols; j++)
-            if ((m1).values[i][j] != (m2).values[i][j])
-                return 0;
+    for (size_t i = 0; i < m1.nRows; i++) {
+        if (memcmp(m1.values[i], m2.values[i], (m1.nCols * sizeof(int))) != 0)
+            return 0;
+    }
 
     return 1;
 }
@@ -134,18 +136,20 @@ _Bool isEMatrix(matrix m) {
 
 }
 
+//TODO:
 _Bool isSymmetricMatrix(matrix m) {
     if (isSquareMatrix(m) == 0)
         return 0;
 
-    for (int i = 0; i < (m).nRows; ++i)
-        for (int j = 0; j < (m).nCols; ++j)
+    for (int i = 0; i < m.nRows; ++i)
+        for (int j = 0; j < m.nCols; ++j)
             if ((m).values[i][j] != (m).values[j][i])
                 return 0;
 
     return 1;
 }
 
+//TODO:
 void transposeSquareMatrix(matrix m) {
     for (size_t i = 0; i < m.nRows; i++)
         for (size_t j = i + 1; j < m.nCols; j++)
