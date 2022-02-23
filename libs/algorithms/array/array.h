@@ -26,6 +26,13 @@ int min(int a, int b);
 
 float getDistance(int *a, int n);
 
+int cmp_long_long(const void *pa, const void *pb);
+
+int countNUnique(long long *a, int n);
+
+
+
+
 // ввод массива data размера n
 void inputArray_(int *a, size_t n);
 

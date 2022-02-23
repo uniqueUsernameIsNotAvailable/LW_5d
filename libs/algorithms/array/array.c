@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "array.h"
 
 void swap(void *a, void *b, size_t size) {
@@ -62,7 +63,7 @@ int min(int a, int b) {
     return a < b ? a : b;
 }
 
-float getDistance(int *a, int n){
+float getDistance(int *a, int n) {
     double distnc = 0;
 
     for (int i = 0; i < n; ++i)
@@ -70,6 +71,31 @@ float getDistance(int *a, int n){
 
     return sqrt(distnc);
 }
+
+int cmp_long_long(const void *pa, const void *pb) {
+    long long arg1 = *(const long long *) pa;
+    long long arg2 = *(const long long *) pb;
+
+    if (arg1 < arg2)
+        return -1;
+    if (arg1 > arg2)
+        return 1;
+
+    return 0;
+}
+
+int countNUnique(long long *a, int n) {
+    qsort(a, n, sizeof(long long), cmp_long_long);
+
+    int amountOfUniq = 1;
+    for (int i = 1; i < n; ++i) {
+        if (a[i - 1] != a[i])
+            amountOfUniq++;
+    }
+
+    return amountOfUniq;
+}
+
 
 void inputArray_(int *const a, const size_t n) {
     for (size_t i = 0; i < n; i++)

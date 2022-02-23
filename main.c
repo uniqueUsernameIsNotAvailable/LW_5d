@@ -241,6 +241,33 @@ void test_sortByDistances(){
 }
 
 //---------------------------------------- TASK 10
+int countEqClassesByRowsSum(matrix m){
+    long long *rowSum = malloc(sizeof(long long) * m.nRows);
+
+    for (int i = 0; i < m.nRows; ++i)
+        rowSum[i] = getSum(m.values[i], m.nCols);
+    //PREVENT LEAK BY CREATING VAR FOR RESULT, FREE CREATED ARRAY!!!!!!!
+    int eqClassesCounter = countNUnique(rowSum, m.nRows);
+
+    free(rowSum);
+
+    return eqClassesCounter;
+}
+
+void test_countEqClassesByRowsSum(){
+    matrix m = createMatrixFromArray((int[]) {7,1,
+                                              2,7,
+                                              5,4,
+                                              4,3,
+                                              1,6,
+                                              8,0}, 6, 2);
+    int wantedResult = 3;
+
+    assert(countEqClassesByRowsSum(m) == wantedResult);
+
+    freeMemMatrix(m);
+}
+
 //---------------------------------------- TASK 11
 //---------------------------------------- TASK 12
 //---------------------------------------- TASK 13
@@ -257,6 +284,7 @@ int main() {
     //test_findSumOfMaxesOfPseudoDiagonal();
     test_getMinInArea();
     test_sortByDistances();
+    test_countEqClassesByRowsSum();
 
     return 0;
 }
