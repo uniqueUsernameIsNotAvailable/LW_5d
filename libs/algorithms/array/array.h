@@ -90,7 +90,7 @@ int countNUnique(long long *a, int n);
  * @param n - длина массива
  * @return 0 или 1
  */
-_Bool isNonDescendingSorted(int *a, int n);
+_Bool isNonDescendingSorted(const int *a, int n);
 
 /*!
  * Подсчёт кол-ва элементов равных values

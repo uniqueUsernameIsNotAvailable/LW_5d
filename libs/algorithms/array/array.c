@@ -97,12 +97,22 @@ int countNUnique(long long *a, int n) {
     return amountOfUniq;
 }
 
-_Bool isNonDescendingSorted(int *a, int n){
+_Bool isNonDescendingSorted(const int *a, int n){
+    for (int i = 1; i < n; i++)
+        if (a[i-1] > a[i])
+            return 0;
 
+    return 1;
 }
 
 int countValues(const int *a, int n, int value){
+    int counter = 0;
 
+    for (int i = 0; i < n; ++i)
+        if (a[i] == value)
+            counter++;
+
+    return counter;
 }
 
 

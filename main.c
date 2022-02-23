@@ -350,7 +350,45 @@ void test_swapPenultimateRow() {
 }
 
 //---------------------------------------- TASK 13
+_Bool hasAllNonDescendingRows(matrix m){
+    for (int i = 0; i < m.nRows; ++i)
+        if (!isNonDescendingSorted(m.values[i], m.nCols))
+            return 0;
+    
+    return 1;
+}
 
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix){
+    int amountOfNonDecMatrices = 0;
+
+    for (int i = 0; i < nMatrix; ++i)
+        if (hasAllNonDescendingRows(ms[i]))
+            amountOfNonDecMatrices++;
+
+    return amountOfNonDecMatrices;
+}
+
+void test_countNonDescendingRowsMatrices() {
+    matrix *testMatrices = createArrayOfMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+
+                    9, 8, 7,
+                    6, 5, 4,
+
+                    145, 7678, 121,
+                    2523876, -757, 7979
+
+            }, 3, 2, 3
+    );
+
+    int wantedResult = 1;
+
+    assert(countNonDescendingRowsMatrices(testMatrices, 3) == wantedResult);
+
+    freeMemMatrices(testMatrices, 3);
+}
 //---------------------------------------- TASK 14
 
 //---------------------------------------- TASK 15
@@ -369,6 +407,7 @@ int main() {
     test_countEqClassesByRowsSum();
     test_getNSpecialElement();
     test_swapPenultimateRow();
+    test_countNonDescendingRowsMatrices();
 
     return 0;
 }
