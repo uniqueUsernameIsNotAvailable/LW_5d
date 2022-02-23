@@ -70,7 +70,6 @@ void swapColumns(matrix m, int j1, int j2) {
         swap(&m.values[i][j1], &m.values[i][j2], sizeof(int));
 }
 
-  //  TODO:SELECTION
 void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
     int *criteriaArray = (int *) malloc(sizeof(int) * m.nRows);
 
@@ -87,8 +86,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int))
     free(criteriaArray);
 }
 
-
-void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
+void selSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
     int *criteriaArray = (int *) malloc(sizeof(int) * m.nCols);
     int *auxiliaryArray = (int *) malloc(sizeof(int) * m.nRows);
 
@@ -99,11 +97,14 @@ void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int))
         criteriaArray[i] = criteria(auxiliaryArray, m.nRows);
     }
 
-    for (int i = 0; i < m.nCols; ++i) {
-        for (int j = i; j > 0 && criteriaArray[j - 1] > criteriaArray[j]; j--) {
-            swap(&criteriaArray[j - 1], &criteriaArray[j], sizeof(int));
-            swapColumns(m, j, j - 1);
-        }
+    for (int i = 0; i < m.nCols - 1; ++i) {
+        int minimumPos = i;
+        for (int j = i + 1; j < m.nCols; j++)
+            if (criteriaArray[j] < criteriaArray[minimumPos])
+                minimumPos = j;
+
+        swap(&criteriaArray[i], &criteriaArray[minimumPos], sizeof (int));
+        swapColumns(m, i, minimumPos);
     }
 
     free(criteriaArray);
@@ -143,7 +144,7 @@ _Bool isSymmetricMatrix(matrix m) {
 
     for (int i = 0; i < m.nRows; ++i)
         for (int j = 0; j < m.nCols; ++j)
-            if ((m).values[i][j] != (m).values[j][i])
+            if (m.values[i][j] != m.values[j][i])
                 return 0;
 
     return 1;

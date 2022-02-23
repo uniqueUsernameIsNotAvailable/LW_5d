@@ -56,7 +56,7 @@ void test_sortRowsByMaxElement() {
 //---------------------------------------- TASK 3
 void sortColsByMinElement(matrix m) {
 
-    insertionSortColsMatrixByColCriteria(m, getMin);
+    selSortColsMatrixByColCriteria(m, getMin);
 }
 
 void test_sortColsByMinElement() {
@@ -369,7 +369,7 @@ int countNonDescendingRowsMatrices(matrix *ms, int nMatrix){
 }
 
 void test_countNonDescendingRowsMatrices() {
-    matrix *testMatrices = createArrayOfMatrixFromArray(
+    matrix *wantedMatrices = createArrayOfMatrixFromArray(
             (int[]) {
                     1, 2, 3,
                     4, 5, 6,
@@ -385,11 +385,64 @@ void test_countNonDescendingRowsMatrices() {
 
     int wantedResult = 1;
 
-    assert(countNonDescendingRowsMatrices(testMatrices, 3) == wantedResult);
+    assert(countNonDescendingRowsMatrices(wantedMatrices, 3) == wantedResult);
 
-    freeMemMatrices(testMatrices, 3);
+    freeMemMatrices(wantedMatrices, 3);
 }
+
 //---------------------------------------- TASK 14
+int countZeroRows(matrix m){
+    int amountOfZeroRows = 0;
+
+    for (int i = 0; i < m.nRows; ++i)
+        if (countValues(m.values[i], m.nCols, 0) == m.nCols)
+            amountOfZeroRows++;
+
+    return amountOfZeroRows;
+}
+
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix){
+    int zeroestMatrix[nMatrix];
+
+    for (size_t i = 0; i < nMatrix; i++)
+        zeroestMatrix[i] = countZeroRows(ms[i]);
+
+    int max = getMax(zeroestMatrix, nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        if (zeroestMatrix[i] == max)
+            outputMatrix(ms[i]);
+}
+
+void test_printMatrixWithMaxZeroRows() {
+    matrix *wantedMatrices = createArrayOfMatrixFromArray(
+            (int[]) {
+                    0, 1,
+                    1, 0,
+                    0,0,
+
+                    1, 1,
+                    1, 2,
+                    1,1,
+
+                    0, 0,
+                    0, 0,
+                    4,7,
+
+                    0, 0,
+                    1, 0,
+                    0,0,
+
+                    0, 1,
+                    0, 2,
+                    0,3,
+
+            }, 5, 3, 2);
+
+    printMatrixWithMaxZeroRows(wantedMatrices,5);
+
+    freeMemMatrices(wantedMatrices, 5);
+}
 
 //---------------------------------------- TASK 15
 
@@ -408,6 +461,7 @@ int main() {
     test_getNSpecialElement();
     test_swapPenultimateRow();
     test_countNonDescendingRowsMatrices();
+    test_printMatrixWithMaxZeroRows();
 
     return 0;
 }
