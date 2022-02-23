@@ -2,6 +2,7 @@
 #define LW_5A_ARRAY_H
 
 #include <stddef.h>
+#include <math.h>
 
 /*!
  * Обменивает значения
@@ -22,6 +23,8 @@ long long getSum(const int *a, int length);
 int max(int a, int b);
 
 int min(int a, int b);
+
+float getDistance(int *a, int n);
 
 // ввод массива data размера n
 void inputArray_(int *a, size_t n);

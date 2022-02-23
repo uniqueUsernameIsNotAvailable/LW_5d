@@ -62,6 +62,15 @@ int min(int a, int b) {
     return a < b ? a : b;
 }
 
+float getDistance(int *a, int n){
+    double distnc = 0;
+
+    for (int i = 0; i < n; ++i)
+        distnc += pow(a[i], 2);
+
+    return sqrt(distnc);
+}
+
 void inputArray_(int *const a, const size_t n) {
     for (size_t i = 0; i < n; i++)
         scanf("%d", &a[i]);

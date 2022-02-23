@@ -180,4 +180,6 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
  */
 matrix mulMatrices(matrix m1, matrix m2);
 
+void insertionSortRowsMatrixByRowCriteriaF(matrix m, float (*criteria)(int *, int));
+
 #endif //LW_5D_MATRIX_H
