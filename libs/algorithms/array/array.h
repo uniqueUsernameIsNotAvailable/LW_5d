@@ -80,10 +80,26 @@ int cmp_long_long(const void *pa, const void *pb);
  * Подсчёт уникальных элементов в массиве а
  * @param a - указатель на массив
  * @param n - длина массива
- * @return
+ * @return кол-во уникальных элементов в массиве
  */
 int countNUnique(long long *a, int n);
 
+/*!
+ * Определяет, отсортирован ли массив а по неубыванию
+ * @param a - указатель на массив
+ * @param n - длина массива
+ * @return 0 или 1
+ */
+_Bool isNonDescendingSorted(int *a, int n);
+
+/*!
+ * Подсчёт кол-ва элементов равных values
+ * @param a - указатель на массив
+ * @param n - длина массива
+ * @param value - значение для подсчёта
+ * @return кол-во элементов равных values
+ */
+int countValues(const int *a, int n, int value);
 
 
 

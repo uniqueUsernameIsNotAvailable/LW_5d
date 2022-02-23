@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <malloc.h>
+#include <memory.h>
 #include "libs/data_structures/matrix/matrix.h"
 
 //---------------------------------------- TASK 1
@@ -139,7 +140,7 @@ _Bool isMutuallyInverseMatrices(matrix m, matrix m1) {
 
 void test_isMutuallyInverseMatrices() {
     matrix m = createMatrixFromArray((int[]) {1, 2,
-                                              0,1}, 2, 2);
+                                              0, 1}, 2, 2);
 
     matrix trueMatrix = createMatrixFromArray((int[]) {1, -2,
                                                        0, 1}, 2, 2);
@@ -220,11 +221,11 @@ void test_getMinInArea() {
 }
 
 //---------------------------------------- TASK 9
-void sortByDistances(matrix m){
+void sortByDistances(matrix m) {
     insertionSortRowsMatrixByRowCriteriaF(m, getDistance);
 }
 
-void test_sortByDistances(){
+void test_sortByDistances() {
     matrix m = createMatrixFromArray((int[]) {1, 2, 3,
                                               40, 50, 60,
                                               7, 8, 9}, 3, 3);
@@ -241,7 +242,7 @@ void test_sortByDistances(){
 }
 
 //---------------------------------------- TASK 10
-int countEqClassesByRowsSum(matrix m){
+int countEqClassesByRowsSum(matrix m) {
     long long *rowSum = malloc(sizeof(long long) * m.nRows);
 
     for (int i = 0; i < m.nRows; ++i)
@@ -254,13 +255,13 @@ int countEqClassesByRowsSum(matrix m){
     return eqClassesCounter;
 }
 
-void test_countEqClassesByRowsSum(){
-    matrix m = createMatrixFromArray((int[]) {7,1,
-                                              2,7,
-                                              5,4,
-                                              4,3,
-                                              1,6,
-                                              8,0}, 6, 2);
+void test_countEqClassesByRowsSum() {
+    matrix m = createMatrixFromArray((int[]) {7, 1,
+                                              2, 7,
+                                              5, 4,
+                                              4, 3,
+                                              1, 6,
+                                              8, 0}, 6, 2);
     int wantedResult = 3;
 
     assert(countEqClassesByRowsSum(m) == wantedResult);
@@ -269,7 +270,7 @@ void test_countEqClassesByRowsSum(){
 }
 
 //---------------------------------------- TASK 11
-int getNSpecialElement(matrix m, int nRows, int nCols){
+int getNSpecialElement(matrix m, int nRows, int nCols) {
     int amountOfSpec = 0;
 //begin from left to right. look for spec element, calc sumOfCol
     for (size_t j = 0; j < m.nCols; j++) {
@@ -291,21 +292,69 @@ int getNSpecialElement(matrix m, int nRows, int nCols){
     return amountOfSpec;
 }
 
-void test_getNSpecialElement(){
-    matrix m = createMatrixFromArray((int[]) {3,5,5,4,
-                                              2,3,6,7,
-                                              12,2,1,2}, 3, 4);
+void test_getNSpecialElement() {
+    matrix m = createMatrixFromArray((int[]) {3, 5, 5, 4,
+                                              2, 3, 6, 7,
+                                              12, 2, 1, 2}, 3, 4);
     int wantedResult = 2;
 
-    assert(getNSpecialElement(m,3,4) == wantedResult);
+    assert(getNSpecialElement(m, 3, 4) == wantedResult);
 
     freeMemMatrix(m);
 }
 
 //---------------------------------------- TASK 12
+position getLeftMin(matrix m) {
+    int minimum = m.values[0][0];
+    position minLeftPos = {0, 0};
+
+    for (int i = 0; i < m.nRows; ++i)
+        for (int j = 0; j < m.nCols; ++j)
+            if (m.values[i][j] < minimum) {
+                minimum = m.values[i][j];
+                minLeftPos = (position) {i, j};
+            }
+
+    return minLeftPos;
+}
+
+void swapPenultimateRow(matrix m) {
+    position minimum = getLeftMin(m);
+    if (m.nRows < 2) {
+        fprintf(stderr, "Matrices are too little");
+        exit(2022);
+    }
+
+    int col[m.nRows];
+    for (size_t i = 0; i < m.nRows; i++)
+        col[i] = m.values[i][minimum.colIndex];
+
+    memcpy(m.values[m.nRows - 2], col, sizeof(int) * m.nCols);
+}
+
+void test_swapPenultimateRow() {
+    matrix m = createMatrixFromArray((int[]) {1, 2, 3,
+                                              4, 5, 6,
+                                              7, 8, 1}, 3, 3);
+
+    matrix wantedMatrix = createMatrixFromArray((int[]) {1, 2, 3,
+                                                         1, 4, 7,
+                                                         7, 8, 1}, 3, 3);
+
+    swapPenultimateRow(m);
+
+    assert(areTwoMatricesEqual(m, wantedMatrix));
+
+    freeMemMatrix(m);
+    freeMemMatrix(wantedMatrix);
+}
+
 //---------------------------------------- TASK 13
+
 //---------------------------------------- TASK 14
+
 //---------------------------------------- TASK 15
+
 
 int main() {
     test_changeRowsByMinAndMax();
@@ -319,6 +368,7 @@ int main() {
     test_sortByDistances();
     test_countEqClassesByRowsSum();
     test_getNSpecialElement();
+    test_swapPenultimateRow();
 
     return 0;
 }

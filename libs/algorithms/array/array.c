@@ -97,6 +97,16 @@ int countNUnique(long long *a, int n) {
     return amountOfUniq;
 }
 
+_Bool isNonDescendingSorted(int *a, int n){
+
+}
+
+int countValues(const int *a, int n, int value){
+
+}
+
+
+
 
 void inputArray_(int *const a, const size_t n) {
     for (size_t i = 0; i < n; i++)
