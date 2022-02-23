@@ -12,22 +12,76 @@
  */
 void swap(void *a, void *b, size_t size);
 
-int getMax(const int * a, int length);
+/*!
+ * Нахождение макс. элемента массива
+ * @param a - указатель на массив
+ * @param length - длина массива
+ * @return макс. элемент массива а
+ */
+int getMax(const int *a, int length);
 
+/*!
+ * Нахождение мин. элемента массива
+ * @param a - указатель на массив
+ * @param length - длина массива
+ * @return мин. элемент массива а
+ */
 int getMin(const int *a, int length);
 
+/*!
+ * Определяет уникальность массива
+ * @param a - указатель на массив
+ * @param length - длина массива
+ * @return 0 или 1
+ */
 _Bool isUnique(const long long *a, int length);
 
+/*!
+ * Нахождение суммы массива
+ * @param a - указатель на массив
+ * @param length - длина массива
+ * @return сумма массива а
+ */
 long long getSum(const int *a, int length);
 
+/*!
+ * Опредеоение максимума из двух целочис. знач.
+ * @param a
+ * @param b
+ * @return макс. элемент из двух
+ */
 int max(int a, int b);
 
+/*!
+ * Опредеоение минимума из двух целочис. знач.
+ * @param a
+ * @param b
+ * @return мин. элемент из двух
+ */
 int min(int a, int b);
 
+/*!
+ * Нахождение расстояния между точками по формуле
+ * @param a - указатель на массив
+ * @param n - длина массива
+ * @return расстояние в виде числа с плавающей запятой
+ */
 float getDistance(int *a, int n);
 
+/*!
+ * Функция-компаратор
+ * @param pa
+ * @param pb
+ * @return
+ */
 int cmp_long_long(const void *pa, const void *pb);
 
+/*!
+ * Подсчёт уникальных элементов в массиве а
+ * @param a - указатель на массив
+ * @param n - длина массива
+ * @return
+ */
 int countNUnique(long long *a, int n);
 
 

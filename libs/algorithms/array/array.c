@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "array.h"
 
+
 void swap(void *a, void *b, size_t size) {
     char *pa = a;
     char *pb = b;

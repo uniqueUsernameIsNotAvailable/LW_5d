@@ -269,6 +269,39 @@ void test_countEqClassesByRowsSum(){
 }
 
 //---------------------------------------- TASK 11
+int getNSpecialElement(matrix m, int nRows, int nCols){
+    int amountOfSpec = 0;
+//begin from left to right. look for spec element, calc sumOfCol
+    for (size_t j = 0; j < m.nCols; j++) {
+        int specElement = m.values[0][j];
+        int coloumnSum = 0;
+
+        for (size_t i = 1; i < m.nRows; i++) {
+            if (m.values[i][j] > specElement) {
+                coloumnSum += specElement;
+                specElement = m.values[i][j];
+            } else
+                coloumnSum += m.values[i][j];
+        }
+
+        if (specElement > coloumnSum)
+            amountOfSpec++;
+    }
+
+    return amountOfSpec;
+}
+
+void test_getNSpecialElement(){
+    matrix m = createMatrixFromArray((int[]) {3,5,5,4,
+                                              2,3,6,7,
+                                              12,2,1,2}, 3, 4);
+    int wantedResult = 2;
+
+    assert(getNSpecialElement(m,3,4) == wantedResult);
+
+    freeMemMatrix(m);
+}
+
 //---------------------------------------- TASK 12
 //---------------------------------------- TASK 13
 //---------------------------------------- TASK 14
@@ -285,6 +318,7 @@ int main() {
     test_getMinInArea();
     test_sortByDistances();
     test_countEqClassesByRowsSum();
+    test_getNSpecialElement();
 
     return 0;
 }
