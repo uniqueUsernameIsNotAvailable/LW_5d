@@ -102,7 +102,6 @@ _Bool isNonDescendingSorted(const int *a, int n);
 int countValues(const int *a, int n, int value);
 
 
-
 // ввод массива data размера n
 void inputArray_(int *a, size_t n);
 

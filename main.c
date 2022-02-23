@@ -150,39 +150,44 @@ void test_isMutuallyInverseMatrices() {
     freeMemMatrix(m);
     freeMemMatrix(trueMatrix);
 }
+
 //---------------------------------------- TASK 7
+long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+    int sizeA = m.nCols + m.nRows - 1;
+    int *addingArray = malloc(sizeof(int) * sizeA);
+    int startPosition = m.nRows - 1;
 
-/*
- * TODO: REWRITE LEFT TO RIGHT
- * ARRAY FOR MAXES
- * K = j + 2 - i
-*/
-int getMaxFromPDiagonal(matrix m, int i, int j) {
-    int maxElement = m.values[i][j];
+    for (int i = 0; i < m.nRows; ++i)
+        for (int j = 0; j < m.nCols; ++j) {
+            int actualPosition = startPosition + j - i;
 
-    while (i < m.nRows && j < m.nCols)
-        maxElement = max(maxElement, m.values[i++][j++]);
+            if (i == 0 || j == 0)
+                addingArray[actualPosition] = m.values[i][j];
+            else
+                addingArray[actualPosition] = max(addingArray[actualPosition], m.values[i][j]);
+        }
 
-    return maxElement;
+    addingArray[startPosition] = 0;
+
+    long long sumOfMaxesOfPD = getSum(addingArray, sizeA);
+//MEM LEAK WAS HERE
+    free(addingArray);
+
+    return sumOfMaxesOfPD;
 }
 
-long long findSumOfMaxesOfPseudoDiagonal() {
+void test_findSumOfMaxesOfPseudoDiagonal() {
     matrix m = createMatrixFromArray((int[]) {3, 2, 5, 4,
                                               1, 3, 6, 3,
                                               3, 2, 1, 2}, 3, 4);
 
-    long long sumOfMaxOfPDiagonal = 0;
-    for (int i = 1; i < m.nRows; ++i)
-        sumOfMaxOfPDiagonal += getMaxFromPDiagonal(m, i, 0);
+    int wantedResult = 20;
 
-    for (int i = 0; i < m.nCols; ++i)
-        sumOfMaxOfPDiagonal += getMaxFromPDiagonal(m, 0, i);
+    assert(findSumOfMaxesOfPseudoDiagonal(m) == wantedResult);
 
-    //SUBTRACT MAIN DIAG
-    return sumOfMaxOfPDiagonal - getMaxFromPDiagonal(m, 0, 0);
+    freeMemMatrix(m);
 }
 
-//TODO:
 //---------------------------------------- TASK 8
 int getMinInArea(matrix m) {
     position maximum = getMaxValuePos(m);
@@ -192,7 +197,7 @@ int getMinInArea(matrix m) {
     int rightElement = maximum.colIndex;
 
     int minInArea = m.values[maximum.rowIndex][maximum.colIndex];
-//were unstable, testing.
+//were unstable, testing. fixed
     while (rowNumber >= 0) {
         for (int i = leftElement; i < rightElement; i++)
             minInArea = min(m.values[rowNumber][i], minInArea);
@@ -350,15 +355,15 @@ void test_swapPenultimateRow() {
 }
 
 //---------------------------------------- TASK 13
-_Bool hasAllNonDescendingRows(matrix m){
+_Bool hasAllNonDescendingRows(matrix m) {
     for (int i = 0; i < m.nRows; ++i)
         if (!isNonDescendingSorted(m.values[i], m.nCols))
             return 0;
-    
+
     return 1;
 }
 
-int countNonDescendingRowsMatrices(matrix *ms, int nMatrix){
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
     int amountOfNonDecMatrices = 0;
 
     for (int i = 0; i < nMatrix; ++i)
@@ -391,7 +396,7 @@ void test_countNonDescendingRowsMatrices() {
 }
 
 //---------------------------------------- TASK 14
-int countZeroRows(matrix m){
+int countZeroRows(matrix m) {
     int amountOfZeroRows = 0;
 
     for (int i = 0; i < m.nRows; ++i)
@@ -401,11 +406,13 @@ int countZeroRows(matrix m){
     return amountOfZeroRows;
 }
 
-void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix){
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
     int zeroestMatrix[nMatrix];
 
     for (size_t i = 0; i < nMatrix; i++)
         zeroestMatrix[i] = countZeroRows(ms[i]);
+
+    printf("Matrices with max rows of zero\n");
 
     int max = getMax(zeroestMatrix, nMatrix);
 
@@ -414,54 +421,115 @@ void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix){
             outputMatrix(ms[i]);
 }
 
-void test_printMatrixWithMaxZeroRows() {
+void test_printMatricesWithMaxZeroRows() {
     matrix *wantedMatrices = createArrayOfMatrixFromArray(
             (int[]) {
                     0, 1,
                     1, 0,
-                    0,0,
+                    0, 0,
 
                     1, 1,
                     1, 2,
-                    1,1,
+                    1, 1,
 
                     0, 0,
                     0, 0,
-                    4,7,
+                    4, 7,
 
                     0, 0,
                     1, 0,
-                    0,0,
+                    0, 0,
 
                     0, 1,
                     0, 2,
-                    0,3,
+                    0, 3,
 
             }, 5, 3, 2);
 
-    printMatrixWithMaxZeroRows(wantedMatrices,5);
+    printMatrixWithMaxZeroRows(wantedMatrices, 5);
 
     freeMemMatrices(wantedMatrices, 5);
 }
 
 //---------------------------------------- TASK 15
+int calculateNorm(matrix m) {
+    int norm = abs(m.values[0][0]);
+
+    for (size_t i = 0; i < m.nRows; ++i) {
+        int max = abs(getMax(m.values[i], m.nCols));
+
+        if (norm < max)
+            norm = max;
+    }
+
+    return norm;
+}
+
+void printMatricesWithMinNorm(matrix *ms, int nMatrix) {
+    int normInMatrices[nMatrix];
+    for (size_t i = 0; i < nMatrix; ++i)
+        normInMatrices[i] = calculateNorm(ms[i]);
+
+    printf("Matrices with lowest norm\n");
+
+    int min = getMin(normInMatrices, nMatrix);
+    for (size_t i = 0; i < nMatrix; i++)
+        if (normInMatrices[i] == min)
+            outputMatrix(ms[i]);
+}
+
+void test_printMatrixWithMinNorm() {
+    matrix *wantedMatrices = createArrayOfMatrixFromArray(
+            (int[]) {
+                    0, 1,
+                    1, 0,
+                    0, 0,
+
+                    1, 1,
+                    1, 2,
+                    1, 1,
+
+                    0, 0,
+                    0, 0,
+                    4, 7,
+
+                    0, 0,
+                    1, 0,
+                    0, 0,
+
+                    0, 1,
+                    0, 2,
+                    0, 3,
+
+            }, 5, 3, 2);
+
+    printMatricesWithMinNorm(wantedMatrices, 5);
+
+    freeMemMatrices(wantedMatrices, 5);
+}
 
 
-int main() {
+void test() {
     test_changeRowsByMinAndMax();
     test_sortRowsByMaxElement();
     test_sortColsByMinElement();
     test_getSquareOfMatrixIfSymmetric();
     test_transposeIfMatrixHasNotEqualSumOfRows();
     test_isMutuallyInverseMatrices();
-    //test_findSumOfMaxesOfPseudoDiagonal();
+    test_findSumOfMaxesOfPseudoDiagonal();
     test_getMinInArea();
     test_sortByDistances();
     test_countEqClassesByRowsSum();
     test_getNSpecialElement();
     test_swapPenultimateRow();
     test_countNonDescendingRowsMatrices();
-    test_printMatrixWithMaxZeroRows();
+    test_printMatricesWithMaxZeroRows();
+    test_printMatrixWithMinNorm();
+}
 
-    return 0;
+int main() {
+    test();
+    printf("ALL SYSTEMS ARE OPERATIONAL, CAPTAIN");
+
+    return 256;
 }

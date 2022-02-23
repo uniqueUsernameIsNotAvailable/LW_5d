@@ -103,7 +103,7 @@ void selSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
             if (criteriaArray[j] < criteriaArray[minimumPos])
                 minimumPos = j;
 
-        swap(&criteriaArray[i], &criteriaArray[minimumPos], sizeof (int));
+        swap(&criteriaArray[i], &criteriaArray[minimumPos], sizeof(int));
         swapColumns(m, i, minimumPos);
     }
 
@@ -137,7 +137,6 @@ _Bool isEMatrix(matrix m) {
 
 }
 
-//TODO:
 _Bool isSymmetricMatrix(matrix m) {
     if (isSquareMatrix(m) == 0)
         return 0;
@@ -150,8 +149,12 @@ _Bool isSymmetricMatrix(matrix m) {
     return 1;
 }
 
-//TODO:
 void transposeSquareMatrix(matrix m) {
+    if (!isSquareMatrix(m)) {
+        fprintf(stderr, "Only sqMatrices are acceptable");
+        exit(2022);
+    }
+
     for (size_t i = 0; i < m.nRows; i++)
         for (size_t j = i + 1; j < m.nCols; j++)
             swap(&m.values[i][j], &m.values[j][i], sizeof(int));
@@ -228,7 +231,7 @@ matrix mulMatrices(matrix m1, matrix m2) {
     return mProduct;
 }
 
-void insertionSortRowsMatrixByRowCriteriaF(matrix m, float (*criteria)(int *, int)){
+void insertionSortRowsMatrixByRowCriteriaF(matrix m, float (*criteria)(int *, int)) {
     float *criteriaArray = (float *) malloc(sizeof(float) * m.nRows);
 
     for (int i = 0; i < m.nRows; ++i)

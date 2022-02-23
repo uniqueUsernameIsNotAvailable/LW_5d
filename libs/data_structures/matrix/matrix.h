@@ -180,6 +180,11 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
  */
 matrix mulMatrices(matrix m1, matrix m2);
 
+/*!
+ * Сортировка вставками строк ВЕЩЕСТВЕННОЙ матрицы m по неубыванию значения функции criteria применяемой для строк
+ * @param m - матрица
+ * @param criteria - функция, по неубыванию значения которой выполняется сортировка
+ */
 void insertionSortRowsMatrixByRowCriteriaF(matrix m, float (*criteria)(int *, int));
 
 #endif //LW_5D_MATRIX_H
